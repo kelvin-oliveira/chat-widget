@@ -1,19 +1,20 @@
 # Chat Widget
 
-A customizable chat widget component for web applications built with React. Easily embed a modern, themeable chat interface in your app or website, either as a React component or as a standalone web component.
+A customizable chat widget component for web applications built with React. Easily embed a modern, AI-powered chat interface in your app or website, either as a React component or as a standalone web component.
 
-[![npm version](https://img.shields.io/npm/v/chat-widget.svg)](https://www.npmjs.com/package/chat-widget)
-[![license](https://img.shields.io/npm/l/chat-widget.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@k12kelvin/chat-widget.svg)](https://www.npmjs.com/package/@k12kelvin/chat-widget)
 
 ---
 
 ## Features
 
-- Plug-and-play chat widget for React or any web page
-- Customizable themes and branding
-- Shadow DOM encapsulation for style isolation
-- Easily configurable via props or attributes
-- Supports both ESM/CJS and IIFE (web component) builds
+- **AI-Powered**: Connected to GPT-4.1-nano for intelligent conversations
+- **Plug-and-play** chat widget for React or any web page
+- **Multiple integration methods**: React component, web component, or global settings
+- **Customizable themes** and branding with built-in presets
+- **Shadow DOM encapsulation** for complete style isolation
+- **Flexible configuration** via props, attributes, or global settings
+- **Live playground** available at [widget-demo-app.vercel.app](https://widget-demo-app.vercel.app/)
 - Built with React, Zustand, and Tailwind CSS
 
 ---
@@ -21,9 +22,7 @@ A customizable chat widget component for web applications built with React. Easi
 ## Installation
 
 ```bash
-npm install chat-widget
-# or
-yarn add chat-widget
+npm install @k12kelvin/chat-widget
 ```
 
 ---
@@ -34,13 +33,14 @@ yarn add chat-widget
 
 ```tsx
 import React from "react";
-import { Widget } from "chat-widget";
+import { Widget } from "@k12kelvin/chat-widget";
 
 export default function App() {
   return (
     <Widget
       title="Eloquent AI"
       position="bottom-right"
+      chatContext="You are a helpful customer support assistant for our e-commerce platform."
       theme={{
         primary: "#6F33B7",
         cardBackground: "#fff",
@@ -60,59 +60,145 @@ export default function App() {
 | Prop                | Type      | Description                                      |
 |---------------------|-----------|--------------------------------------------------|
 | `brand`             | `Brand`   | Branding info `{ name, websiteUrl }`              |
-| `chatContext`       | `string`  | Context string for the chat                       |
+| `chatContext`       | `string`  | Context string passed to the AI for personalized responses |
 | `position`          | `"bottom-left" \| "bottom-right"` | Widget position on screen |
 | `showBrand`         | `boolean` | Show branding in the widget footer                |
 | `status`            | `"maintenance" \| "offline" \| "online"` | Widget status |
 | `suggestedQuestions`| `string[]`| Suggested questions for quick start               |
-| `theme`             | `Theme`   | Theme object (see below)                          |
-| `title`             | `string`  | Widget title                                      |
+| `theme`             | `Theme`   | Theme object (see theming section)               |
+| `title`             | `string`  | Widget title displayed in header                  |
 
 ---
 
-### 2. As a Web Component (IIFE Build)
+### 2. As a Web Component
 
-You can use the widget as a custom element `<chat-widget>` in any HTML page. Load the IIFE bundle and use the element directly:
+You can use the widget as a custom element `<chat-widget>` in any HTML page. The widget requires React and ReactDOM to be loaded first.
+
+#### Method 1: Global Settings Configuration
 
 ```html
-<!-- 1. Load the IIFE bundle (from your CDN or local build) -->
-<script src="/dist/iife/chat-widget.iife.js"></script>
-
-<!-- 2. Add the widget to your page -->
-<chat-widget title="Eloquent AI" position="bottom-right"></chat-widget>
-
-<!-- 3. Or boot dynamically with config -->
-<script>
-  window.ChatWidget.boot({
-    title: "Eloquent AI",
-    position: "bottom-right",
-    theme: {
-      primary: "#6F33B7",
-      cardBackground: "#fff",
-      // ...
-    },
-    suggestedQuestions: [
-      "What can you help me with?",
-      "Tell me a fun fact"
-    ]
-  });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Widget Test</title>
+</head>
+<body>
+  <script>
+    window.chatWidgetSettings = {
+      title: "Hello from Intercom Style!",
+      position: "bottom-right",
+      chatContext: "You are a helpful assistant for our website visitors.",
+      suggestedQuestions: [
+        "How can I get started?",
+        "What services do you offer?"
+      ]
+    };
+  </script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@k12kelvin/chat-widget@0.1.0/dist/iife/chat-widget.iife.js"></script>
+</body>
+</html>
 ```
 
-You can also update the widget config at runtime:
+#### Method 2: Custom Element with Attributes
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Widget Test</title>
+</head>
+<body>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@k12kelvin/chat-widget@0.1.0/dist/iife/chat-widget.iife.js"></script>
+  <chat-widget 
+    title="Eloquent AI" 
+    position="bottom-right"
+    chat-context="You are a helpful customer service representative."
+  ></chat-widget>
+</body>
+</html>
+```
+
+#### Method 3: Programmatic Boot
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Widget Test</title>
+</head>
+<body>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@k12kelvin/chat-widget@0.1.0/dist/iife/chat-widget.iife.js"></script>
+  <script>
+    window.ChatWidget.boot({
+      title: "Eloquent AI",
+      position: "bottom-right",
+      chatContext: "You are an expert product advisor for our tech store.",
+      theme: {
+        primary: "#6F33B7",
+        cardBackground: "#fff"
+      },
+      suggestedQuestions: [
+        "What can you help me with?",
+        "Tell me a fun fact"
+      ]
+    });
+  </script>
+</body>
+</html>
+```
+
+You can also update the widget configuration at runtime:
 
 ```js
-window.ChatWidget.update({ title: "New Title" });
+window.ChatWidget.update({ 
+  title: "New Title",
+  chatContext: "Updated context for the AI"
+});
 ```
+
+---
+
+## Try it Live
+
+Visit our interactive playground at **[widget-demo-app.vercel.app](https://widget-demo-app.vercel.app/)** to:
+- Test different themes and configurations
+- Preview the widget in real-time
+- Copy your desired settings for easy integration
+- See the AI in action with GPT-4.1-nano
+
+### Playground Source Code
+Check out the complete playground implementation and AI endpoint configuration at **[github.com/kelvin-oliveira/widget-demo-app](https://github.com/kelvin-oliveira/widget-demo-app)**. This repository contains:
+- Full playground source code
+- AI endpoint implementation details
+- Integration examples and best practices
 
 ---
 
 ## Theming
 
-You can fully customize the widget's appearance via the `theme` prop or attribute. Example theme objects:
+Customize the widget's appearance with comprehensive theming options. The widget comes with several built-in themes:
+
+### Built-in Themes
+- `eloquent` (default)
+- `eloquentDark`
+- `forest`
+- `forestDark`
+- `minimalist`
+- `minimalistDark`
+
+### Custom Theme Example
 
 ```js
-const eloquentTheme = {
+const customTheme = {
   assistantMessageBackground: "#F1F5F9",
   assistantMessageText: "#020817",
   border: "#E1E7EF",
@@ -132,45 +218,62 @@ const eloquentTheme = {
 };
 ```
 
-Other built-in themes include `eloquentDark`, `forest`, `forestDark`, `minimalist`, and `minimalistDark` (see `src/constants/themes.ts`).
+---
+
+## AI Integration
+
+This widget is powered by **GPT-4.1-nano**, providing intelligent and contextual responses. Use the `chatContext` prop to customize the AI's behavior for your specific use case:
+
+```tsx
+// E-commerce support
+<Widget chatContext="You are a helpful customer support agent for an online store. Help users with orders, returns, and product questions." />
+
+// Technical documentation
+<Widget chatContext="You are a technical documentation assistant. Help users understand our API and provide code examples." />
+
+// General website assistance
+<Widget chatContext="You are a friendly website assistant. Help visitors navigate and find information about our services." />
+```
 
 ---
 
 ## API Reference
 
-### `window.ChatWidget`
-- `boot(config?)`: Mounts the widget with the given config.
-- `update(config)`: Updates the widget's config at runtime.
+### `window.ChatWidget` (Web Component)
+- `boot(config?)`: Mounts the widget with the given configuration
+- `update(config)`: Updates the widget's configuration at runtime
 
-### `Widget` Props
-See the table above for all available props and their types.
+### `Widget` Component Props
+See the props table above for all available options and their types.
+
+### Configuration Object
+All configuration options available for both React props and web component settings:
+
+```typescript
+interface WidgetConfig {
+  title?: string;
+  position?: "bottom-left" | "bottom-right";
+  chatContext?: string;
+  theme?: Theme;
+  suggestedQuestions?: string[];
+  showBrand?: boolean;
+  status?: "maintenance" | "offline" | "online";
+  brand?: {
+    name: string;
+    websiteUrl: string;
+  };
+}
+```
+
+## Support
+
+- 📖 **Documentation**: This README and inline code documentation
+- 🎮 **Playground**: [widget-demo-app.vercel.app](https://widget-demo-app.vercel.app/)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/kelvin-oliveira/chat-widget/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/kelvin-oliveira/chat-widget/discussions)
 
 ---
 
-## Development & Contributing
+## Author
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/kelvin-oliveira/chat-widget.git
-   cd chat-widget
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Run locally:
-   ```bash
-   npm run dev
-   ```
-4. Build for production:
-   ```bash
-   npm run build
-   ```
-
-Pull requests and issues are welcome!
-
----
-
-## License
-
-ISC © Kelvin Oliveira 
+Created by **Kelvin Oliveira**
