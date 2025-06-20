@@ -274,6 +274,47 @@ interface WidgetConfig {
 
 ---
 
+## Packaging and Testing Locally with `npm link`
+
+To test your npm package in another local project without publishing or packing, use `npm link` to create a symlink. This is ideal for active development and local integration testing.
+
+### 1. Link your package globally
+
+In your package directory:
+
+```bash
+npm run build
+npm link
+```
+
+### 2. Link the package in your target project
+
+In your target project's directory:
+
+```bash
+npm link @k12kelvin/chat-widget
+```
+
+This will symlink your local package into the target project's `node_modules`.
+
+### 3. Unlink when done
+
+To remove the link from your target project:
+
+```bash
+npm unlink @k12kelvin/chat-widget
+```
+
+To remove the global link:
+
+```bash
+npm unlink --global @k12kelvin/chat-widget
+```
+
+> **Note:** After making changes to your package, re-run `npm run build` in the package directory to update the build output used by the linked project.
+
+---
+
 ## Author
 
 Created by **Kelvin Oliveira**
