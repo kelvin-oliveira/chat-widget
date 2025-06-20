@@ -1,8 +1,14 @@
 {
   "name": "@k12kelvin/chat-widget",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A customizable chat widget component for Web applications built with React.",
-  "keywords": ["chat", "widget", "react", "component", "ui"],
+  "keywords": [
+    "chat",
+    "widget",
+    "react",
+    "component",
+    "ui"
+  ],
   "author": "Kelvin Oliveira <kelvinguilherme97@gmail.com>",
   "license": "ISC",
   "homepage": "https://github.com/kelvin-oliveira/chat-widget#readme",
