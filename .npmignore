@@ -1,0 +1,13 @@
+# Exclude dev and config files
+.vscode
+node_modules
+package-lock.json
+postcss.config.mjs
+tailwind.config.ts
+tsconfig.json
+tsup.config.ts
+vite.config.js
+
+# Include build outputs and generated CSS
+!dist/
+!src/styles/tailwind.generated.css 

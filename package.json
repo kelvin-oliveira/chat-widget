@@ -1,5 +1,5 @@
 {
-  "name": "chat-widget",
+  "name": "@k12kelvin/chat-widget",
   "version": "0.1.0",
   "description": "A customizable chat widget component for Web applications built with React.",
   "keywords": ["chat", "widget", "react", "component", "ui"],
@@ -26,7 +26,7 @@
       "import": "./dist/react/index.mjs",
       "require": "./dist/react/index.cjs"
     },
-    "./iife": "./dist/my-widget.iife.js"
+    "./iife": "./dist/iife/my-widget.iife.js"
   },
   "scripts": {
     "build": "npm run build:css && npm run build:react && npm run build:widget",
